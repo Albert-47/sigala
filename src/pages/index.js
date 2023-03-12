@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
+import Home from '@/components/home/Home';
 
-export default function Home() {
+export default function Index() {
     return (
         <>
             <Head>
@@ -17,7 +18,9 @@ export default function Home() {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <main>I am the landing</main>
+            <main>
+                <Home />
+            </main>
         </>
     );
 }
