@@ -1,7 +1,7 @@
-import { Typography } from '@mui/material';
+import Banner from './Banner';
 
 const Home = () => {
-    return <Typography variant='h1'>This is the mega landing</Typography>;
+    return <Banner />;
 };
 
 export default Home;
