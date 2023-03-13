@@ -8,7 +8,7 @@ export default function Layout({ children }) {
             <CssBaseline>
                 <Navbar />
                 <main>{children}</main>
-                <Footer />
+                {/* <Footer /> */}
             </CssBaseline>
         </>
     );
