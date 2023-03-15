@@ -1,5 +1,6 @@
 import Banner from './Banner';
 import Carousel from './Carousel';
+import Categories from './Categories';
 import ProductCategories from './ProductCategories';
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
             <Banner />
             <ProductCategories />
             <Carousel />
+            <Categories />
         </>
     );
 };
