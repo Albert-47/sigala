@@ -1,4 +1,5 @@
 import Banner from './Banner';
+import Carousel from './Carousel';
 import Categories from './Categories';
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <>
             <Banner />
             <Categories />
+            <Carousel />
         </>
     );
 };
