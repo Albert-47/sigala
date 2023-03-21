@@ -11,6 +11,8 @@ export default function ProductCard({ product }) {
         <Card
             sx={{
                 maxWidth: 345,
+                transition: 'border 5s linear',
+                backgroundColor: '#ebeff1',
                 '&:hover': {
                     border: '1px solid black'
                 }

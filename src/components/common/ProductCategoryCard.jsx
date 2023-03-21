@@ -8,8 +8,8 @@ const CategoryCard = ({ title }) => {
             sx={{
                 display: 'relative',
                 width: '20rem',
-                bgcolor: '#e8e7e6',
                 textAlign: 'center',
+                bgcolor: '#ebeff1',
                 '&:hover': {
                     cursor: 'pointer'
                 }

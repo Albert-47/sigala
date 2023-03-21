@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import ProductCard from '../common/ProductCard';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { Box, Typography } from '@mui/material';
+import styles from '@/styles/carousel.module.css';
 
 const CarouselComponent = () => {
     const responsive = {
@@ -91,6 +92,7 @@ const CarouselComponent = () => {
                 </Typography>
             </Box>
             <Carousel
+                containerClass={styles.carouselContainer}
                 responsive={responsive}
                 style={{ justifyContent: 'center' }}>
                 {products.map((p) => (
