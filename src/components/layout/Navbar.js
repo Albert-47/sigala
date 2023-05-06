@@ -10,12 +10,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useState } from 'react';
 
 import styles from '@/styles/layout/navbar.module.css';
+import Link from 'next/link';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Hombres', 'Mujeres', 'Niños', 'Todos los Productos'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
@@ -38,28 +38,22 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position='static'>
+        <AppBar position='sticky'>
             <Container maxWidth='xl'>
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
-                    />
-                    <Typography
-                        variant='h6'
-                        noWrap
-                        component='a'
-                        href='/'
+                    <Box
+                        component='img'
+                        src='/sigala-logo.png'
+                        alt='Sigala Shop Logo'
                         sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none'
-                        }}>
-                        LOGO
-                    </Typography>
+                            marginLeft: '-2rem',
+                            maxWidth: '100px',
+                            display: {
+                                xs: 'none',
+                                md: 'block'
+                            }
+                        }}
+                    />
 
                     <Box
                         sx={{
@@ -95,7 +89,9 @@ const Navbar = () => {
                             {pages.map((page) => (
                                 <MenuItem
                                     key={page}
-                                    onClick={handleCloseNavMenu}>
+                                    onClick={handleCloseNavMenu}
+                                    component={Link}
+                                    href='/men/shoes'>
                                     <Typography textAlign='center'>
                                         {page}
                                     </Typography>
@@ -103,26 +99,20 @@ const Navbar = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                    />
-                    <Typography
-                        variant='h5'
-                        noWrap
-                        component='a'
-                        href=''
+                    <Box
+                        component='img'
+                        src='/sigala-logo.png'
+                        alt='Sigala Shop Logo'
                         sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none'
-                        }}>
-                        LOGO
-                    </Typography>
+                            marginLeft: '-2rem',
+                            maxWidth: '100px',
+                            display: {
+                                xs: 'block',
+                                md: 'none'
+                            },
+                            mr: 1
+                        }}
+                    />
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -133,6 +123,8 @@ const Navbar = () => {
                                 className={styles.navItem}
                                 key={page}
                                 onClick={handleCloseNavMenu}
+                                component={Link}
+                                href='/men/shoes'
                                 sx={{
                                     my: 2,
                                     color: 'white',
