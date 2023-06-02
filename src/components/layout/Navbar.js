@@ -91,7 +91,9 @@ const Navbar = () => {
                                     key={page}
                                     onClick={handleCloseNavMenu}
                                     component={Link}
-                                    href='/men/shoes'>
+                                    href={`/${page
+                                        .toLowerCase()
+                                        .replaceAll(' ', '')}/shoes`}>
                                     <Typography textAlign='center'>
                                         {page}
                                     </Typography>
@@ -124,7 +126,9 @@ const Navbar = () => {
                                 key={page}
                                 onClick={handleCloseNavMenu}
                                 component={Link}
-                                href='/men/shoes'
+                                href={`/${page
+                                    .toLowerCase()
+                                    .replaceAll(' ', '')}/shoes`}
                                 sx={{
                                     my: 2,
                                     color: 'white',
