@@ -1,9 +1,8 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '@/styles/Home.module.css';
 import Home from '@/components/home/Home';
+import { client } from '../../sanity/lib/client';
 
-export default function Index() {
+export default function Index({ products }) {
     return (
         <>
             <Head>
@@ -18,7 +17,19 @@ export default function Index() {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <Home />
+
+            <Home products={products} />
         </>
     );
 }
+
+export const getServerSideProps = async () => {
+    const query = '*[_type == "shoe"]';
+    const products = await client.fetch(query);
+
+    return {
+        props: {
+            products
+        }
+    };
+};

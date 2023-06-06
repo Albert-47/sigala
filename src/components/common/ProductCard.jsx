@@ -5,6 +5,7 @@ import {
     CardMedia,
     Typography
 } from '@mui/material';
+import { urlForImage } from '../../../sanity/lib/image';
 
 export default function ProductCard({ product }) {
     return (
@@ -21,7 +22,7 @@ export default function ProductCard({ product }) {
                 <CardMedia
                     component='img'
                     height='200'
-                    image='https://cdn.shopify.com/s/files/1/0323/7006/5547/products/OP100190M-4_1024x1024.jpg?v=1661264203'
+                    image={urlForImage(product.image.asset._ref)}
                     alt='green iguana'
                 />
                 <CardContent>
@@ -29,7 +30,7 @@ export default function ProductCard({ product }) {
                         $200
                     </Typography>
                     <Typography gutterBottom variant='h5' component='div'>
-                        Lizard
+                        {product.name}
                     </Typography>
                     <Typography variant='body2' color='text.secondary'>
                         Womens running

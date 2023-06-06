@@ -3,12 +3,12 @@ import Carousel from './Carousel';
 import Categories from './Categories';
 import ProductCategories from './ProductCategories';
 
-const Home = () => {
+const Home = ({ products }) => {
     return (
         <>
             <Banner />
             <ProductCategories />
-            <Carousel />
+            <Carousel products={products} />
             <Categories />
         </>
     );

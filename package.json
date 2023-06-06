@@ -13,11 +13,19 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
+    "@sanity/client": "^6.0.1",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.10.0",
+    "@stripe/stripe-js": "^1.52.1",
+    "canvas-confetti": "^1.6.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
+    "next-sanity": "^4.3.2",
+    "next-sanity-image": "^6.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-multi-carousel": "^2.8.2"
+    "react-multi-carousel": "^2.8.2",
+    "sanity": "^3.10.0"
   }
 }

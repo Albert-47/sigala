@@ -2,12 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 const Footer = () => {
     return (
-        <Box
-            component='footer'
-            bgcolor='primary.dark'
-            p={5}
-            textAlign='center'
-            mt={5}>
+        <Box component='footer' bgcolor='primary.dark' p={5} textAlign='center'>
             <Box
                 sx={{
                     display: 'flex',

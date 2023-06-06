@@ -6,7 +6,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import { Box, Typography } from '@mui/material';
 import styles from '@/styles/carousel.module.css';
 
-const CarouselComponent = () => {
+const CarouselComponent = ({ products }) => {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -26,33 +26,6 @@ const CarouselComponent = () => {
             items: 1
         }
     };
-
-    const products = [
-        {
-            title: 'AA',
-            price: 27
-        },
-        {
-            title: 'AB',
-            price: 27
-        },
-        {
-            title: 'AC',
-            price: 27
-        },
-        {
-            title: 'AD',
-            price: 27
-        },
-        {
-            title: 'AE',
-            price: 27
-        },
-        {
-            title: 'AF',
-            price: 27
-        }
-    ];
     return (
         <Container maxWidth='xl' component='section' sx={{ my: '5rem' }}>
             <Box
@@ -96,7 +69,7 @@ const CarouselComponent = () => {
                 responsive={responsive}
                 style={{ justifyContent: 'center' }}>
                 {products.map((p) => (
-                    <ProductCard key={p.title} product={p} />
+                    <ProductCard key={p.name} product={p} />
                 ))}
             </Carousel>
         </Container>
