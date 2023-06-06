@@ -5,45 +5,97 @@ import {
     FormGroup,
     Stack
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import useChecksFilter from '@/utils/hooks/useChecksFilter';
+import { ShoesContext } from '../shoes';
+import { client } from '../../../../sanity/lib/client';
+import shoesWithCategories from '@/utils/queryBuilders/shoesWithCategory';
+import shoesWithGender from '@/utils/queryBuilders/shoesWithGender';
 
-export default function Filters() {
+export default function Filters({ categories }) {
+    const initialState = {};
+
+    const [context, setContext] = useContext(ShoesContext);
+
+    categories.forEach((category) => {
+        initialState[category.name] = false;
+    });
+
     const [filters, handleFiltersChange] = useChecksFilter({
+        ...initialState,
         men: false,
         women: false
     });
 
+    const [gender, handleGenderChange] = useChecksFilter({
+        caballeros: false,
+        damas: false
+    });
+
     useEffect(() => {
-        console.log(filters);
-    }, [filters]);
+        async function fetchData() {
+            const query = `*[_type == "shoe" && ${shoesWithCategories(
+                filters
+            )} && (${shoesWithGender(gender)})]`;
+            const shoes = await client.fetch(query);
+            setContext({
+                shoes,
+                filters
+            });
+        }
+
+        fetchData();
+    }, [filters, gender]);
 
     return (
-        <Container>
-            <Stack sx={{ bgcolor: '#fff' }}>
-                <h2>Categorias</h2>
+        <Container
+            sx={{
+                bgcolor: 'rgb(30, 121, 87)',
+                minHeight: '100vh'
+            }}>
+            <Stack>
+                <h2>Género</h2>
+
                 <FormGroup>
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={filters.men}
+                                checked={gender.men}
                                 name='men'
-                                onChange={handleFiltersChange}
+                                onChange={handleGenderChange}
                             />
                         }
-                        label='Enable dense'
+                        label='Caballeros'
                     />
                     <FormControlLabel
                         control={
                             <Checkbox
                                 name='women'
-                                checked={filters.women}
-                                onChange={handleFiltersChange}
+                                checked={gender.women}
+                                onChange={handleGenderChange}
                             />
                         }
-                        label='Enable secondary text'
+                        label='Damas'
                     />
+                </FormGroup>
+
+                <h2>Categoría</h2>
+
+                <FormGroup>
+                    {categories.map((category) => (
+                        <FormControlLabel
+                            key={category._id}
+                            control={
+                                <Checkbox
+                                    checked={filters[category.name]}
+                                    name={category.name}
+                                    onChange={handleFiltersChange}
+                                />
+                            }
+                            label={category.name}
+                        />
+                    ))}
                 </FormGroup>
             </Stack>
         </Container>
