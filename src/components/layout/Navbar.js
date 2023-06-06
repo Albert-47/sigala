@@ -15,7 +15,7 @@ import { useState } from 'react';
 import styles from '@/styles/layout/navbar.module.css';
 import Link from 'next/link';
 
-const pages = ['Hombres', 'Mujeres', 'Niños', 'Todos los Productos'];
+const pages = ['Caballeros', 'Damas', 'Niños', 'Todos los Productos'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {

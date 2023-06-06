@@ -5,48 +5,66 @@ import {
     FormGroup,
     Stack
 } from '@mui/material';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import useChecksFilter from '@/utils/hooks/useChecksFilter';
 import { ShoesContext } from '../shoes';
 import { client } from '../../../../sanity/lib/client';
 import shoesWithCategories from '@/utils/queryBuilders/shoesWithCategory';
 import shoesWithGender from '@/utils/queryBuilders/shoesWithGender';
+import { gender as genders } from '@/types';
+import { useRouter } from 'next/router';
 
 export default function Filters({ categories }) {
-    const initialState = {};
+    const {
+        query: { category }
+    } = useRouter();
 
     const [context, setContext] = useContext(ShoesContext);
+
+    const initialState = {};
 
     categories.forEach((category) => {
         initialState[category.name] = false;
     });
 
-    const [filters, handleFiltersChange] = useChecksFilter({
-        ...initialState,
-        men: false,
-        women: false
-    });
+    const [filters, handleFiltersChange] = useChecksFilter(initialState);
 
-    const [gender, handleGenderChange] = useChecksFilter({
+    const [gender, handleGenderChange, setGender] = useChecksFilter({
         caballeros: false,
         damas: false
     });
 
+    const [initialFiltering, setInitialFiltering] = useState(false); //This determines whether the filters are initialized with the params or not
+
+    useEffect(() => {
+        if (category && Object.keys(genders).includes(category)) {
+            setGender({
+                [category]: true
+            });
+        }
+
+        setInitialFiltering(true);
+    }, [category]);
+
     useEffect(() => {
         async function fetchData() {
+            if (!initialFiltering) return;
+
             const query = `*[_type == "shoe" && ${shoesWithCategories(
                 filters
             )} && (${shoesWithGender(gender)})]`;
+            console.log(query);
             const shoes = await client.fetch(query);
             setContext({
                 shoes,
                 filters
             });
+            console.log(context);
         }
 
         fetchData();
-    }, [filters, gender]);
+    }, [filters, gender, category]);
 
     return (
         <Container
@@ -61,8 +79,8 @@ export default function Filters({ categories }) {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={gender.men}
-                                name='men'
+                                checked={gender.caballeros}
+                                name='caballeros'
                                 onChange={handleGenderChange}
                             />
                         }
@@ -71,8 +89,8 @@ export default function Filters({ categories }) {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                name='women'
-                                checked={gender.women}
+                                name='damas'
+                                checked={gender.damas}
                                 onChange={handleGenderChange}
                             />
                         }
