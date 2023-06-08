@@ -1,6 +1,7 @@
 import {
     Checkbox,
     Container,
+    Divider,
     FormControlLabel,
     FormGroup,
     Stack
@@ -14,6 +15,7 @@ import shoesWithCategories from '@/utils/queryBuilders/shoesWithCategory';
 import shoesWithGender from '@/utils/queryBuilders/shoesWithGender';
 import { gender as genders } from '@/types';
 import { useRouter } from 'next/router';
+import shoesForKids from '@/utils/queryBuilders/shoesForKids';
 
 export default function Filters({ categories }) {
     const {
@@ -30,6 +32,8 @@ export default function Filters({ categories }) {
 
     const [filters, handleFiltersChange] = useChecksFilter(initialState);
 
+    const [kids, setKids] = useState(false);
+
     const [gender, handleGenderChange, setGender] = useChecksFilter({
         caballeros: false,
         damas: false
@@ -38,33 +42,45 @@ export default function Filters({ categories }) {
     const [initialFiltering, setInitialFiltering] = useState(false); //This determines whether the filters are initialized with the params or not
 
     useEffect(() => {
-        if (category && Object.keys(genders).includes(category)) {
-            setGender({
-                [category]: true
-            });
+        //Filter initialization
+
+        if (!initialFiltering) {
+            //Gender filter
+
+            if (category && Object.keys(genders).includes(category)) {
+                setGender({
+                    ...gender,
+                    [category]: true
+                });
+            }
+
+            //Kids filter
+
+            if (category == 'niños') {
+                setKids(true);
+            }
+            console.log('initial');
+
+            setInitialFiltering(true);
         }
-
-        setInitialFiltering(true);
-    }, [category]);
-
-    useEffect(() => {
         async function fetchData() {
-            if (!initialFiltering) return;
-
+            console.log(initialFiltering);
             const query = `*[_type == "shoe" && ${shoesWithCategories(
                 filters
-            )} && (${shoesWithGender(gender)})]`;
+            )} ${gender && '&& ' + shoesWithGender(gender)} ${
+                kids ? '&& ' + shoesForKids(kids) : ''
+            }]`;
             console.log(query);
             const shoes = await client.fetch(query);
             setContext({
-                shoes,
+                shoes: shoes,
                 filters
             });
-            console.log(context);
+            console.log(shoes);
         }
 
         fetchData();
-    }, [filters, gender, category]);
+    }, [filters, gender, kids, category]);
 
     return (
         <Container
@@ -96,14 +112,26 @@ export default function Filters({ categories }) {
                         }
                         label='Damas'
                     />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                name='kids'
+                                checked={kids}
+                                onChange={() => setKids(!kids)}
+                            />
+                        }
+                        label='Niños'
+                    />
                 </FormGroup>
+
+                <Divider sx={{ mt: 2 }} />
 
                 <h2>Categoría</h2>
 
                 <FormGroup>
                     {categories.map((category) => (
                         <FormControlLabel
-                            key={category._id}
+                            key={`filter-${category._id}`}
                             control={
                                 <Checkbox
                                     checked={filters[category.name]}
