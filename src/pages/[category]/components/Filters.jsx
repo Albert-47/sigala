@@ -30,7 +30,8 @@ export default function Filters({ categories }) {
         initialState[category.name] = false;
     });
 
-    const [filters, handleFiltersChange] = useChecksFilter(initialState);
+    const [filters, handleFiltersChange, setFilters] =
+        useChecksFilter(initialState);
 
     const [kids, setKids] = useState(false);
 
@@ -59,12 +60,25 @@ export default function Filters({ categories }) {
             if (category == 'niños') {
                 setKids(true);
             }
-            console.log('initial');
+
+            //Category filter
+
+            let lowerCaseCategories = categories.map((category) =>
+                category.name.toLowerCase()
+            );
+
+            if (lowerCaseCategories.includes(category)) {
+                //Se pone la primera en mayuscula
+
+                setFilters({
+                    ...filters,
+                    [category.charAt(0).toUpperCase() + category.slice(1)]: true
+                });
+            }
 
             setInitialFiltering(true);
         }
         async function fetchData() {
-            console.log(initialFiltering);
             const query = `*[_type == "shoe" && ${shoesWithCategories(
                 filters
             )} ${gender && '&& ' + shoesWithGender(gender)} ${
@@ -79,7 +93,7 @@ export default function Filters({ categories }) {
             console.log(shoes);
         }
 
-        fetchData();
+        if (initialFiltering) fetchData();
     }, [filters, gender, kids, category]);
 
     return (
