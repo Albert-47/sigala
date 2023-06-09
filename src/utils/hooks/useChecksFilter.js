@@ -9,5 +9,5 @@ export default function useChecksFilter(initialState = {}) {
             [e.target.name]: e.target.checked
         });
     }
-    return [filters, handleFiltersChange];
+    return [filters, handleFiltersChange, setFilters];
 }
